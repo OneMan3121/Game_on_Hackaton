@@ -7,20 +7,30 @@ public class MainMenuManager : MonoBehaviour
 {
     private bool isStartPressed = false;
 
-    public static Button btn_Start, btn_Setting, btn_1_vs_AI, btn_1_vs_1, btn_Exit;
+    public static GameObject btn_Start, btn_Setting, btn_1_vs_AI, btn_1_vs_1, btn_Exit;
     void Start()
     {
-        btn_Start = GameObject.Find("Btn_Start").GetComponent<Button>();
-        btn_Setting = GameObject.Find("Btn_Setting").GetComponent<Button>();
-        btn_1_vs_AI = GameObject.Find("Btn_Game_1_vs_AI").GetComponent<Button>();
-        btn_1_vs_1 = GameObject.Find("Btn_Game_1_vs_1").GetComponent<Button>();
-        btn_Exit = GameObject.Find("Btn_Exit").GetComponent<Button>();
+        if(btn_Start == null) btn_Start = GameObject.Find("Btn_Start"); // Start
+        if (btn_Setting == null) btn_Setting = GameObject.Find("Btn_Setting"); // Setting
+        if (btn_1_vs_AI == null) // 1_vs_AI
+        {
+            btn_1_vs_AI = GameObject.Find("Btn_Game_1_vs_AI");
+            btn_1_vs_AI.SetActive(false);
+        }
+        if (btn_1_vs_1 == null) // 1_vs_1
+        {
+            btn_1_vs_1 = GameObject.Find("Btn_Game_1_vs_1");
+            btn_1_vs_1.SetActive(false);
+        }
+           
+        if (btn_Exit == null) btn_Exit = GameObject.Find("Btn_Exit"); // Exit
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void OnClick(string btn_name)
@@ -29,17 +39,9 @@ public class MainMenuManager : MonoBehaviour
         switch (btn_name)
         {
             case "Start":
-                if(isStartPressed)
-                {
-                    isStartPressed = !isStartPressed;
-                    btn_1_vs_AI.enabled = true;
-                    btn_1_vs_1.enabled = true;
-                } else
-                {
-                    isStartPressed = !isStartPressed;
-                    btn_1_vs_AI.enabled = false;
-                    btn_1_vs_1.enabled = false;
-                }
+                btn_1_vs_AI.SetActive(btn_Start.GetComponent<Toggle>().isOn);
+                btn_1_vs_1.SetActive(btn_Start.GetComponent<Toggle>().isOn);
+
                 break;
             case "Setting":
                 break;
